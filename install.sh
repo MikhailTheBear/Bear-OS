@@ -24,6 +24,7 @@ if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
     echo "Done! Enjoy :)"
     echo "Press any key to exit..."
     read answer
+    echo "Goodbye!"
 else
     echo "Canceled!"
     exit 1
