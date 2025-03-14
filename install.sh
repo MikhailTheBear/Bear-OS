@@ -18,6 +18,8 @@ if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
     echo "Downloading Bear-OS..."
     git clone --branch master --single-branch https://github.com/MikhailTheBear/Bear-OS.git
     cd Bear-OS
+    echo "The project is installed, press any key to install the necessary py-libraries."
+    read
     pip install pygame colorama uuid nextcord twilio tk pyautogui
     echo "Done!"
 
