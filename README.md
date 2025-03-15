@@ -15,7 +15,7 @@ To install this "OS" you must have:
 Run this command in terminal:
 
 ```
-bash <(curl -fsSL https://raw.githubusercontent.com/MikhailTheBear/Bear-OS/refs/heads/main/install.sh) 
+bash <(curl -fsSL https://raw.githubusercontent.com/MikhailTheBear/Bear-OS/refs/heads/main/install-en.sh) 
 ```
 
 # RU🇷🇺
@@ -35,5 +35,5 @@ bash <(curl -fsSL https://raw.githubusercontent.com/MikhailTheBear/Bear-OS/refs/
 Запустите эту команду в терминале:
 
 ```
-bash <(curl -fsSL https://raw.githubusercontent.com/MikhailTheBear/Bear-OS/refs/heads/main/install.sh) 
+bash <(curl -fsSL https://raw.githubusercontent.com/MikhailTheBear/Bear-OS/refs/heads/main/install-ru.sh) 
 ```
