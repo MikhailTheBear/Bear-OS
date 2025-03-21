@@ -29,6 +29,9 @@ if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
     read answer
     pip install pygame colorama uuid nextcord twilio tk pyautogui
     echo -e "${GREEN}Done! Enjoy :)${NC}"
+    echo "Press Enter to start..."
+    read answer
+    python3 MSDOS.py
     echo "Press Enter to exit..."
     read answer
     echo "Goodbye!"
