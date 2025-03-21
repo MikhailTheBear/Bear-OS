@@ -35,6 +35,9 @@ if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
     echo "phone_account_sid = 'your account_sid' " >> config.py
     echo "phone_auth_token = 'your auth_token' " >> config.py
     echo "my_phone_number = 'your phone_number' " >> config.py
+    echo "Пожалуйста, настройте SMTP [ok]"
+    read answer
+    nano config.py
     python3 MSDOS.py
     echo "Нажмите Enter, чтобы выйти..."
     read answer
