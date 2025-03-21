@@ -30,6 +30,8 @@ if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
     echo -e "${GREEN}Готово! Наслаждайтесь :)${NC}"
     echo "Нажмите Enter, чтобы запустить..."
     read answer
+    echo "from_email = 'youremail@example.com' " >> config.py
+    echo "password = 'your password' " >> config.py
     python3 MSDOS.py
     echo "Нажмите Enter, чтобы выйти..."
     read answer
