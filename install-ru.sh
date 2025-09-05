@@ -54,7 +54,7 @@ EOL
     read -r
     nano config.py
 
-    python3 MSDOS.py
+    python3 bearOS.py
 
     echo "Нажмите Enter для выхода..."
     read -r
