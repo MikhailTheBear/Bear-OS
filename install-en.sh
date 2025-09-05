@@ -18,7 +18,7 @@ echo "Welcome to Bear-OS installer!"
 echo ""
 echo -e "${RED}Attention! ${YELLOW}The project currently only has Russian language, the author will try to add English in version ${GREEN}1.9.${NC}"
 
-echo "Do you want install Bear-OS? (y/n)"
+echo "Do you want install Bear-OS? (y/N)"
 read answer
 
 if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
@@ -27,7 +27,12 @@ if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
     cd Bear-OS
     echo -e "${YELLOW}The project is installed, press Enter to install the necessary py-libraries...${NC}"
     read answer
-    pip install pygame colorama uuid nextcord twilio tk pyautogui
+    echo -e "${YELLOW}Do you use pip3? (y/N), if not then just pip${NC}"
+    read answer
+    if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
+        pip3 install pygame colorama uuid nextcord twilio tk pyautogui
+    else
+        pip install pygame colorama uuid nextcord twilio tk pyautogui
     echo -e "${GREEN}Done! Enjoy :)${NC}"
     echo "Press Enter to start..."
     read answer
