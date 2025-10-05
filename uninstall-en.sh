@@ -21,9 +21,11 @@ echo "Do you want to UNinstall Bear-OS? (y/N)"
 read -r answer
 
 if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
-    echo -e "${YELLOW}Downloading Bear-OS...${NC}"
+    echo -e "${YELLOW}Deleting Bear-OS...${NC}"
 
     rm -rf Bear-OS
+
+    echo -e "${GREEN}Done!${NC}"
 
     echo "Press Enter to exit..."
     read -r
