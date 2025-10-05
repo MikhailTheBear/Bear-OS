@@ -26,7 +26,7 @@ if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
     cd Bear-OS || exit
 
     echo -e "${YELLOW}The project is installed, installing the necessary py-libraries...${NC}"
-    read -r
+    
 
     echo -e "${YELLOW}Do you use pip3? (y/N), if not then just pip${NC}"
     read -r answer
