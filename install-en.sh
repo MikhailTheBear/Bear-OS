@@ -25,7 +25,7 @@ if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
     git clone --branch master --single-branch https://github.com/MikhailTheBear/Bear-OS.git
     cd Bear-OS || exit
 
-    echo -e "${YELLOW}The project is installed, press Enter to install the necessary py-libraries...${NC}"
+    echo -e "${YELLOW}The project is installed, installing the necessary py-libraries...${NC}"
     read -r
 
     echo -e "${YELLOW}Do you use pip3? (y/N), if not then just pip${NC}"
@@ -36,10 +36,6 @@ if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
     else
         pip install pygame colorama uuid nextcord twilio tk pyautogui
     fi
-
-    echo -e "${GREEN}Done! Enjoy :)${NC}"
-    echo "Press Enter to start..."
-    read -r
 
     # Настройка config.py
     cat <<EOL >> config.py
@@ -53,6 +49,10 @@ EOL
     echo "Please, setup SMTP [ok]"
     read -r
     nano config.py
+
+    echo -e "${GREEN}Done! Enjoy :)${NC}"
+    echo "Press Enter to start..."
+    read -r
 
     python3 bearOS.py
 
