@@ -7,6 +7,7 @@
 To install this "OS" you must have:
 
 - The Python programming language version 3.11.0 and higher, you can install it here: https://www.python.org/downloads/
+- pip or pip3
 
 # Installing
 
@@ -35,6 +36,7 @@ git clone https://github.com/MikhailTheBear/Bear-OS.git
 Для установки этой "ОС" у вас должно быть:
 
 - Язык программирования Python версии 3.11.0 и выше, установить его можно здесь: https://www.python.org/downloads/
+- pip или pip3
 
 
 
