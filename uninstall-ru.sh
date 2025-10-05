@@ -24,6 +24,8 @@ if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
 
     rm -rf Bear-OS
 
+    echo -e "${GREEN}Готово!${NC}"
+
     echo ""
     echo "Нажмите Enter, чтобы выйти..."
     read -r
