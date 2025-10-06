@@ -225,7 +225,7 @@ logo = ("""
 
 
 #--------PROPERTIES--------#
-forgorbearos = "N" #forget BEAR-OS?
+forgorbearos = "Y" #forget BEAR-OS?
 checkpass = "Y" #Check password?
 defaultName = "User" #default name
 passset = "123" #default password
@@ -439,6 +439,18 @@ redeemcodes = [
 redeemedcodes = []
 
 
+nitrofullcodes = [
+    "https://discord.gift/0x1y2z3a4b5c6d7e8f",
+    "https://discord.gift/1a2b3c4d5e6f7g8h",
+    "https://discord.gift/2b3c4d5e6f7g8h9i",
+    "https://discord.gift/3c4d5e6f7g8h9i0j",
+    "https://discord.gift/4d5e6f7g8h9i0j1k",
+    "https://discord.gift/5e6f7g8h9i0j1k2l",
+    "https://discord.gift/6f7g8h9i0j1k2l3m",
+    "https://discord.gift/7g8h9i0j1k2l3m4n",
+]
+
+
 SMTPPORTS = [587, 465, 25]
 SMTPPROTOCOLS = ["smtp.gmail.com", "smtp.yandex.com", "smtp.yandex.ru"]
 
@@ -549,7 +561,150 @@ def send_html_mail(to_mail, subject):
             print(errorInfo[1])
 
 
+def send_checklist(to_mail, type, lang, name, product=None, cost=None, currency=None,
+                   BuyIDNow=None, showbalance=None, balance=None,
+                   boughtcode=None, payment_method=None, masked=None, redeemcode=None, link=None):
 
+    subjects = {
+        "store": {"ru": "Успешная покупка (Bear-OS)", "en": "Purchase successful (Bear-OS)"},
+        "topup": {"ru": "Успешное пополнение (Bear-OS)", "en": "Top-up successful (Bear-OS)"},
+        "redeem": {"ru": "Активация прошла успешно (Bear-OS)", "en": "Activation successful (Bear-OS)"}
+    }
+    subject = subjects.get(type, {}).get(lang, "Bear-OS Notification")
+
+    # Шапка Bear-OS
+    header = """
+    <div style="background:linear-gradient(90deg,#7b2ff7,#f107a3);
+                padding:20px;text-align:center;color:#fff;">
+      <h1 style="margin:0;font-size:22px;font-family:Arial,Helvetica,sans-serif;">Bear-OS</h1>
+      <p style="margin:5px 0 0;font-size:14px;">Системное уведомление</p>
+    </div>
+    """
+
+    footer = """
+    <div style="padding:15px;text-align:center;font-size:12px;color:#999;border-top:1px solid #eee;">
+      Это письмо создано автоматически Bear-OS. Пожалуйста, не отвечайте на него.
+    </div>
+    """
+
+    # --------------------
+    # STORE (покупка)
+    # --------------------
+    if type == "store":
+        if lang == "ru":
+            body = f"""
+            <h2 style="margin-top:0;">Здравствуйте, {name}!</h2>
+            <p>Вы успешно приобрели товар <b>{product}</b>.</p>
+            <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;">
+              <p><b>Полученный товар:</b> {product}</p>
+              <p><b>Стоимость:</b> {cost} {currency}</p>
+              <p><b>Код покупки:</b> {BuyIDNow}</p>
+              <p><b>Ваш баланс:</b> {showbalance} {currency} ({balance}$)</p>
+              <p><b>Ваш код:</b> {boughtcode}</p>
+            </div>
+            <p style="font-size:14px;color:#555;">Спасибо за использование Bear-OS 🚀</p>
+            """
+        else:
+            body = f"""
+            <h2 style="margin-top:0;">Hello, {name}!</h2>
+            <p>You have successfully purchased <b>{product}</b>.</p>
+            <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;">
+              <p><b>Product:</b> {product}</p>
+              <p><b>Cost:</b> {cost} {currency}</p>
+              <p><b>Purchase ID:</b> {BuyIDNow}</p>
+              <p><b>Your balance:</b> {showbalance} {currency} ({balance}$)</p>
+              <p><b>Your code:</b> {boughtcode}</p>
+            </div>
+            <p style="font-size:14px;color:#555;">Thank you for using Bear-OS 🚀</p>
+            """
+
+    # --------------------
+    # TOPUP (пополнение)
+    # --------------------
+    elif type == "topup":
+        if lang == "ru":
+            body = f"""
+            <h2 style="margin-top:0;">Здравствуйте, {name}!</h2>
+            <p>Ваш баланс успешно пополнен.</p>
+            <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;">
+              <p><b>Код покупки:</b> {BuyIDNow}</p>
+              <p><b>Новый баланс:</b> {showbalance} {currency} ({balance}$)</p>
+              <p><b>Метод оплаты:</b> {payment_method} {masked}</p>
+            </div>
+            <p style="font-size:14px;color:#555;">Спасибо, что используете Bear-OS 💳</p>
+            """
+        else:
+            body = f"""
+            <h2 style="margin-top:0;">Hello, {name}!</h2>
+            <p>Your balance has been successfully topped up.</p>
+            <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;">
+              <p><b>Purchase ID:</b> {BuyIDNow}</p>
+              <p><b>New balance:</b> {showbalance} {currency} ({balance}$)</p>
+              <p><b>Payment method:</b> {payment_method} {masked}</p>
+            </div>
+            <p style="font-size:14px;color:#555;">Thank you for using Bear-OS 💳</p>
+            """
+
+    # --------------------
+    # REDEEM (активация)
+    # --------------------
+    elif type == "redeem":
+        if lang == "ru":
+            body = f"""
+            <h2 style="margin-top:0;">Здравствуйте, {name}!</h2>
+            <p>Вы успешно активировали код <b>{redeemcode}</b>.</p>
+            <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;">
+              <p><b>Полученный товар:</b> {product}</p>
+              <p><b>Стоимость:</b> {cost} {currency}</p>
+              <p><b>Код покупки:</b> {BuyIDNow}</p>
+            </div>
+            <p style="font-size:14px;color:#555;">Спасибо за использование Bear-OS 🎉</p>
+            """
+        else:
+            body = f"""
+            <h2 style="margin-top:0;">Hello, {name}!</h2>
+            <p>You have successfully activated code <b>{redeemcode}</b>.</p>
+            <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;">
+              <p><b>Product:</b> {product}</p>
+              <p><b>Cost:</b> {cost} {currency}</p>
+              <p><b>Purchase ID:</b> {BuyIDNow}</p>
+            </div>
+            <p style="font-size:14px;color:#555;">Thank you for using Bear-OS 🎉</p>
+            """
+
+    # Финальная сборка HTML
+    html = f"""
+    <html>
+      <body style="margin:0;padding:0;background:#f5f5f7;font-family:Arial,sans-serif;">
+        <div style="max-width:600px;margin:30px auto;background:#fff;border-radius:12px;overflow:hidden;
+                    box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+          {header}
+          <div style="padding:25px;color:#333;">
+            {body}
+          </div>
+          {footer}
+        </div>
+      </body>
+    </html>
+    """
+
+    try:
+        msg = MIMEMultipart()
+        msg['From'] = config.from_email
+        msg['To'] = to_mail
+        msg['Subject'] = subject
+        msg.attach(MIMEText(html, 'html'))
+
+        server = smtplib.SMTP(SMTPPROTOCOL, SMTPPORT)
+        server.starttls()
+        server.login(config.from_email, config.password)
+        server.send_message(msg)
+        server.quit()
+
+        print(Fore.GREEN + f"✅ [{lang.upper()}] Bear-OS письмо ({type}) отправлено на {to_mail}")
+
+    except smtplib.SMTPException as ex:
+        print(Fore.RED + Back.RESET + "❌ Ошибка при отправке письма! Код ошибки: " + str(ex))
 
 
 
@@ -1257,7 +1412,18 @@ if selectedLang == "RU":
                             if to_mail != "":
                                 product = "Активация " + systemName
                                 cost = 0
-                                send_mail(to_mail, "Activation is Success! / Успешная активация!", "Здравствуйте, " + name + "\nВы активиривали код '" + redeemcode + "' И получили " + product + "\nCтоимость: " + str(cost) + currency + "\nКод покупки: " + str(BuyIDNow))
+                                #send_mail(to_mail, "Activation is Success! / Успешная активация!", "Здравствуйте, " + name + "\nВы активиривали код '" + redeemcode + "' И получили " + product + "\nCтоимость: " + str(cost) + currency + "\nКод покупки: " + str(BuyIDNow))
+                                send_checklist(
+                                    to_mail=to_mail,
+                                    type="redeem",
+                                    lang="ru",
+                                    name=name,
+                                    product=product,
+                                    cost=cost,
+                                    currency=currency,
+                                    BuyIDNow=BuyIDNow,
+                                    redeemcode=redeemcode
+                                )
                                 send_html_mail(to_mail,"Успешная покупка!")
                         else:
                             pass
@@ -1328,14 +1494,20 @@ if selectedLang == "RU":
 
 
             elif pr == "store":
+                #----------ЦЕНЫ----------#
                 cost1 = 200 * setcurrencyrate(currency)
+                cost2 = 9.99 * setcurrencyrate(currency)
+                #----------НАЗВАНИЯ----------#
                 product1 = "Ключ Активации " + systemName
+                product2 = "Discord Nitro 1мес"
+
                 showbalance = balance * setcurrencyrate(currency)
+
                 print("Баланс: " + str(showbalance) + currency)
                 print("")
                 print("1 -- Ключ Активации -- " + systemName + " -- " + str(cost1) + currency)
                 print("")
-                print("2 -- Скоро...")
+                print("2 -- Discord Nitro 1M -- " + str(cost2) + currency)
                 print("")
 
                 Qitem = str(input("Выбор товара: "))
@@ -1355,9 +1527,56 @@ if selectedLang == "RU":
                             BuyIDNow = uuid.uuid4()
                             print(Back.GREEN + Fore.WHITE + "УСПЕШНО! Код покупки: " + str(BuyIDNow))
                             boughtcode = choice(redeemcodes)
-                            print(Fore.WHITE + Back.MAGENTA + "Ваш ключ: " + boughtcode + ". Используете его в redeem")
+                            print(Fore.WHITE + Back.MAGENTA + "Ваш ключ: " + boughtcode)
                             if to_mail != "":
-                                send_mail(to_mail, "Success puschare! / Успешная покупка!", "Здравствуйте, " + name + "\nВы купили товар '" + product + "' И получили " + product + "\nCтоимость: " + str(cost) + currency + "\nКод покупки: " + str(BuyIDNow) + "\nБаланс: " + str(showbalance) + currency + " (" + str(balance) + "$)" + "\nВаш код: " + boughtcode)
+                                #send_mail(to_mail, "Success puschare! / Успешная покупка!", "Здравствуйте, " + name + "\nВы купили товар '" + product + "' И получили " + product + "\nCтоимость: " + str(cost) + currency + "\nКод покупки: " + str(BuyIDNow) + "\nБаланс: " + str(showbalance) + currency + " (" + str(balance) + "$)" + "\nВаш код: " + boughtcode)
+                                send_checklist(
+                                    to_mail=to_mail,
+                                    type="store",
+                                    lang="ru",
+                                    name=name,
+                                    product=product,
+                                    cost=cost,
+                                    currency=currency,
+                                    BuyIDNow=BuyIDNow,
+                                    showbalance=showbalance,
+                                    balance=balance,
+                                    boughtcode=boughtcode
+                                )
+                                send_html_mail(to_mail,"Успешная покупка!")
+                
+                elif Qitem == "2":
+                    cost = cost2
+                    product = product2
+                    print("Товар: "+ product + ". К оплате: " + str(cost) + currency)
+                    Qbuy = input("Купить? Y / N: ")
+                    if Qbuy == "Y":
+                        if showbalance < cost:
+                            print("Недостаточно средств! (" + str(showbalance) + " / " + str(cost) + currency + ")")
+                            if to_mail != "":
+                                send_html_error(to_mail, "Ошибка покупки: Недостаточно средств!")
+                        else:
+                            showbalance = showbalance - cost
+                            balance = showbalance / setcurrencyrate(currency)
+                            BuyIDNow = uuid.uuid4()
+                            print(Back.GREEN + Fore.WHITE + "УСПЕШНО! Код покупки: " + str(BuyIDNow))
+                            boughtcode = choice(nitrofullcodes)
+                            print(Fore.WHITE + Back.MAGENTA + "Ваш код: " + boughtcode + ". Используете его в redeem")
+                            if to_mail != "":
+                                #send_mail(to_mail, "Success puschare! / Успешная покупка!", "Здравствуйте, " + name + "\nВы купили товар '" + product + "' И получили " + product + "\nCтоимость: " + str(cost) + currency + "\nКод покупки: " + str(BuyIDNow) + "\nБаланс: " + str(showbalance) + currency + " (" + str(balance) + "$)" + "\nВаш код: " + boughtcode)
+                                send_checklist(
+                                    to_mail=to_mail,
+                                    type="store",
+                                    lang="ru",
+                                    name=name,
+                                    product=product,
+                                    cost=cost,
+                                    currency=currency,
+                                    BuyIDNow=BuyIDNow,
+                                    showbalance=showbalance,
+                                    balance=balance,
+                                    boughtcode=boughtcode
+                                )
                                 send_html_mail(to_mail,"Успешная покупка!")
                         
             elif pr == "addtobalance":
@@ -1398,14 +1617,17 @@ if selectedLang == "RU":
 
                             # Отправка письма при необходимости
                             if to_mail != "":
-                                send_mail(
-                                    to_mail,
-                                    "Успешная пополнение!",
-                                    "Здравствуйте, " + name +
-                                    "\nВы пополнили баланс." +
-                                    "\nКод покупки: " + str(BuyIDNow) +
-                                    "\nНовый баланс: " + str(showbalance) + currency + " (" + str(balance) + "$)" +
-                                    "\nМетод оплаты: " + payment_method + masked
+                                send_checklist(
+                                    to_mail=to_mail,
+                                    type="topup",
+                                    lang="ru",
+                                    name=name,
+                                    BuyIDNow=BuyIDNow,
+                                    showbalance=showbalance,
+                                    balance=balance,
+                                    currency=currency,
+                                    payment_method=payment_method,
+                                    masked=masked
                                 )
                         else:
                             print("Оплата не прошла. Неверная карта или недостаточно средств.")
@@ -1423,7 +1645,7 @@ if selectedLang == "RU":
                     Qnewcurrency = input("Валюта: ")
                     currency = Qnewcurrency
                     print("Успешно!")
-                if Qdosettings == "changepassword":
+                elif Qdosettings == "changepassword":
                     newpass = input("Новый пароль: ")
                     newpassconfirm = input("Подтвердите новый пароль: ")
                     if newpass == newpassconfirm:
@@ -1902,7 +2124,18 @@ else:
                             if to_mail != "":
                                 product = "Activation of " + systemName
                                 cost = 0
-                                send_mail(to_mail, "Activation is Success! / Успешная активация!", "Hello, " + name + "\nYou activated the code '" + redeemcode + "' And you received the " + product + "\nPrice: " + str(cost) + currency + "\nPurchase code: " + str(BuyIDNow))
+                                #send_mail(to_mail, "Activation is Success! / Успешная активация!", "Hello, " + name + "\nYou activated the code '" + redeemcode + "' And you received the " + product + "\nPrice: " + str(cost) + currency + "\nPurchase code: " + str(BuyIDNow))
+                                send_checklist(
+                                    to_mail=to_mail,
+                                    type="redeem",
+                                    lang="en",
+                                    name=name,
+                                    redeemcode=redeemcode,
+                                    product=product,
+                                    cost=cost,
+                                    currency=currency,
+                                    BuyIDNow=BuyIDNow
+                                )
                                 send_html_mail(to_mail,"Successful purchase!")
                         else:
                             pass
@@ -1973,14 +2206,20 @@ else:
 
 
             elif pr == "store":
+                #----------PRICES----------#
                 cost1 = 200 * setcurrencyrate(currency)
+                cost2 = 9.99 * setcurrencyrate(currency)
+                #----------NAMES----------#
                 product1 = "Activation Key of " + systemName
+                product2 = "Discord Nitro 1M"
+
                 showbalance = balance * setcurrencyrate(currency)
+
                 print("Balance: " + str(showbalance) + currency)
                 print("")
                 print("1 -- Activation Key of -- " + systemName + " -- " + str(cost1) + currency)
                 print("")
-                print("2 -- Soon...")
+                print("2 -- Discord Nitro 1M -- " + str(cost2) + currency)
                 print("")
 
                 Qitem = str(input("Product selection: "))
@@ -2002,7 +2241,54 @@ else:
                             boughtcode = choice(redeemcodes)
                             print(Fore.WHITE + Back.MAGENTA + "Your key: " + boughtcode + ". Use it in redeem")
                             if to_mail != "":
-                                send_mail(to_mail, "Success puschare! / Успешная покупка!", "Hello, " + name + "\nYou bought the product '" + product + "' And you got " + product + "\nCost: " + str(cost) + currency + "\nPurchase code: " + str(BuyIDNow) + "\nBalance: " + str(showbalance) + currency + " (" + str(balance) + "$)" + "\nYour code: " + boughtcode)
+                                #send_mail(to_mail, "Success puschare! / Успешная покупка!", "Hello, " + name + "\nYou bought the product '" + product + "' And you got " + product + "\nCost: " + str(cost) + currency + "\nPurchase code: " + str(BuyIDNow) + "\nBalance: " + str(showbalance) + currency + " (" + str(balance) + "$)" + "\nYour code: " + boughtcode)
+                                send_checklist(
+                                    to_mail=to_mail,
+                                    type="store",
+                                    lang="en",
+                                    name=name,
+                                    product=product,
+                                    cost=cost,
+                                    currency=currency,
+                                    BuyIDNow=BuyIDNow,
+                                    showbalance=showbalance,
+                                    balance=balance,
+                                    boughtcode=boughtcode
+                                )
+                                send_html_mail(to_mail,"Успешная покупка!")
+
+                elif Qitem == "2":
+                    cost = cost2
+                    product = product2
+                    print("Product: "+ product + ". To be paid: " + str(cost) + currency)
+                    Qbuy = input("Buy? Y / N: ")
+                    if Qbuy == "Y":
+                        if showbalance < cost:
+                            print("Not enough funds! (" + str(showbalance) + " / " + str(cost) + currency + ")")
+                            if to_mail != "":
+                                send_html_error(to_mail, "Purchase Error: Insufficient funds!")
+                        else:
+                            showbalance = showbalance - cost
+                            balance = showbalance / setcurrencyrate(currency)
+                            BuyIDNow = uuid.uuid4()
+                            print(Back.GREEN + Fore.WHITE + "SUCCESSFULLY! Purchase code: " + str(BuyIDNow))
+                            boughtcode = choice(redeemcodes)
+                            print(Fore.WHITE + Back.MAGENTA + "Your code: " + boughtcode)
+                            if to_mail != "":
+                                #send_mail(to_mail, "Success puschare! / Успешная покупка!", "Hello, " + name + "\nYou bought the product '" + product + "' And you got " + product + "\nCost: " + str(cost) + currency + "\nPurchase code: " + str(BuyIDNow) + "\nBalance: " + str(showbalance) + currency + " (" + str(balance) + "$)" + "\nYour code: " + boughtcode)
+                                send_checklist(
+                                    to_mail=to_mail,
+                                    type="store",
+                                    lang="en",
+                                    name=name,
+                                    product=product,
+                                    cost=cost,
+                                    currency=currency,
+                                    BuyIDNow=BuyIDNow,
+                                    showbalance=showbalance,
+                                    balance=balance,
+                                    boughtcode=boughtcode
+                                )
                                 send_html_mail(to_mail,"Успешная покупка!")
                         
 
@@ -2041,16 +2327,20 @@ else:
 
                             BuyIDNow = uuid.uuid4()
 
+
                             # Send email if needed
                             if to_mail != "":
-                                send_mail(
-                                    to_mail,
-                                    "Top-up Successful!",
-                                    "Hello " + name +
-                                    "\nYou have topped up your balance." +
-                                    "\nPurchase ID: " + str(BuyIDNow) +
-                                    "\nNew balance: " + str(showbalance) + currency + " (" + str(balance) + "$)" +
-                                    "\nPayment method: " + payment_method + masked
+                                send_checklist(
+                                    to_mail=to_mail,
+                                    type="topup",
+                                    lang="en",
+                                    name=name,
+                                    BuyIDNow=BuyIDNow,
+                                    showbalance=showbalance,
+                                    currency=currency,
+                                    balance=balance,
+                                    payment_method=payment_method,
+                                    masked=masked
                                 )
                         else:
                             print("Payment failed. Invalid card or insufficient funds.")
@@ -2068,7 +2358,7 @@ else:
                     Qnewcurrency = input("Валюта: ")
                     currency = Qnewcurrency
                     print("Успешно!")
-                if Qdosettings == "changepassword":
+                elif Qdosettings == "changepassword":
                     newpass = input("Новый пароль: ")
                     newpassconfirm = input("Подтвердите новый пароль: ")
                     if newpass == newpassconfirm:
@@ -2125,6 +2415,7 @@ else:
 #-English-#
 
 #Copyright © 2023-2025 MikhailTheBear. All rights reserved.
+#Customize it as you want, but do not delete mention of the Bear-OS project.
 #Please do not delete this lines.
 #deleting or changing this lines is a violation of the license agreement.
 #this project made with fun and love <3
@@ -2134,6 +2425,7 @@ else:
 #-Russian-#
 
 #copyright © 2023-2025 MikhailTheBear. Все права защищены.
+#Кастомизируйте его как хотите, но не удаляйте упоминание проекта Bear-OS.
 #Пожалуйста, не удаляйте эти строки.
 #Удаление или изменение этих строк является нарушением лицензионного соглашения.
 #Этот проект сделан с удовольствием и любовью <3
