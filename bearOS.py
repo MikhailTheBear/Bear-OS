@@ -22,7 +22,7 @@
 
 
 
-#--------VERSION 1.8.7, What's new?--------#
+#--------VERSION 1.8.8, What's new?--------#
 
 #- Added currency system (RUB, $, EUR, HRY, GBP, BYN) etc.
 #- BearPay - Added card masking function (mask_card)
@@ -32,7 +32,7 @@
 #- theme changer by theme.py
 
 
-#--------ВЕРСИЯ 1.8.7, Что нового?--------#
+#--------ВЕРСИЯ 1.8.8, Что нового?--------#
 #- Добавлена система валют (RUB, $, EUR, HRY, GBP, BYN) и т.д.
 #- BearPay - Добавлена функция маскировки карт (mask_card)
 #- Исправлены некоторые баги, например: Если вы меняете валюту, баланс не меняется (Если у меня 587 RUB и я меняю на $, у меня будет 587$)
@@ -231,7 +231,7 @@ defaultName = "User" #default name
 passset = "123" #default password
 checkaccaunt = "Y" #check accaunt
 activatebearos = "N" #Activate Bear-OS
-BearOSVersion = "1.8.7" # Version Of Bear-OS
+BearOSVersion = "1.8.8" # Version Of Bear-OS
 systemName = "Bear-OS" # Bear-OS System Name
 to_mail = "" #default mail IMPORTANT: DONT CHANGE THIS!
 defaultMail = "" #default mail
