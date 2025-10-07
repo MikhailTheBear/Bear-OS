@@ -519,7 +519,7 @@ def send_mail(to_mail, subject, text):
         MakeError()
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RED + "")
-        print(Fore.RED + Back.RESET + "Случилась внутрнния ошибка! Код ошибки: " + str(ex))
+        print(Fore.RED + Back.RESET + "Err: " + str(ex))
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RESET + "")
@@ -551,7 +551,7 @@ def send_html_mail(to_mail, subject):
         MakeError()
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RED + "")
-        print(Fore.RED + Back.RESET + "Случилась внутрнния ошибка! Код ошибки: " + str(ex))
+        print(Fore.RED + Back.RESET + "Err " + str(ex))
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RESET + "")
@@ -577,13 +577,12 @@ def send_checklist(to_mail, type, lang, name, product=None, cost=None, currency=
     <div style="background:linear-gradient(90deg,#7b2ff7,#f107a3);
                 padding:20px;text-align:center;color:#fff;">
       <h1 style="margin:0;font-size:22px;font-family:Arial,Helvetica,sans-serif;">Bear-OS</h1>
-      <p style="margin:5px 0 0;font-size:14px;">Системное уведомление</p>
     </div>
     """
 
     footer = """
     <div style="padding:15px;text-align:center;font-size:12px;color:#999;border-top:1px solid #eee;">
-      Это письмо создано автоматически Bear-OS. Пожалуйста, не отвечайте на него.
+      Это письмо создано автоматически Bear-OS. | This email was generated automatically by Bear-OS.
     </div>
     """
 
@@ -701,10 +700,10 @@ def send_checklist(to_mail, type, lang, name, product=None, cost=None, currency=
         server.send_message(msg)
         server.quit()
 
-        print(Fore.GREEN + f"✅ [{lang.upper()}] Bear-OS письмо ({type}) отправлено на {to_mail}")
+        print(Fore.GREEN + f"✅ [{lang.upper()}] Bear-OS email ({type}) sent to {to_mail}")
 
     except smtplib.SMTPException as ex:
-        print(Fore.RED + Back.RESET + "❌ Ошибка при отправке письма! Код ошибки: " + str(ex))
+        print(Fore.RED + Back.RESET + "Err " + str(ex))
 
 
 
@@ -728,7 +727,7 @@ def send_html_error(to_mail, subject):
         MakeError()
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RED + "")
-        print(Fore.RED + Back.RESET + "Случилась внутрнния ошибка! Код ошибки: " + str(ex))
+        print(Fore.RED + Back.RESET + "Err: " + str(ex))
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RESET + "")
@@ -759,7 +758,7 @@ def send_ban(to_mail, subject, text):
         MakeError()
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RED + "")
-        print(Fore.RED + Back.RESET + "Случилась внутрнния ошибка! Код ошибки: " + str(ex))
+        print(Fore.RED + Back.RESET + "Err: " + str(ex))
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RESET + "")
@@ -790,7 +789,7 @@ def send_data(to_mail, subject, text):
         MakeError()
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RED + "")
-        print(Fore.RED + Back.RESET + "Случилась внутрнния ошибка! Код ошибки: " + str(ex))
+        print(Fore.RED + Back.RESET + "Err: " + str(ex))
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RED + "")
         print(Fore.RED + Back.RESET + "")
@@ -887,7 +886,8 @@ else:
     else:
         name = defaultName
     Computer_name = "(Unknown)"
-    checkpass = "N"
+    if passset == "":
+        checkpass = "N"
     print(Back.RED + Fore.YELLOW + "No name!")
     pygame.mixer.music.load("error.mp3")
     pygame.mixer.music.play()
@@ -944,7 +944,7 @@ try:
 except:
     for i in range(15):
         print("")
-    print("Default language: English")
+    print(f"Default language: {defaultLanguage}.")
     selectedLang = defaultLanguage 
     
 for i in range(4):
@@ -1738,6 +1738,7 @@ else:
         print(Back.RESET + Fore.GREEN + "")
         print(Back.RESET + Fore.GREEN + "")
         print(Back.RESET + Fore.GREEN + "")
+        print(Back.RESET + color + "")
 
 
         while bearosexist == "N":
@@ -1982,11 +1983,11 @@ else:
 
                 print(Back.YELLOW + Fore.BLACK + "")
             elif pr == "Kotel":
-                doscan = pt.confirm("Добро пожаловать в KOTEL! Хотите проверить няшность френдов?", "KOTEL", ("Да","Нет"))
-                if doscan == "Да":
+                doscan = pt.confirm("Welcome to KOTEL! Do u want check computer?", "KOTEL", ("Yes","No"))
+                if doscan == "Yes":
                     sleep(5)
-                    pt.alert("Найдена угроза - RickRoll.app ! Удалить её?", "KOTEL")
-                    pt.alert("ОЙ! Я её запустил....", "KOTEL")
+                    pt.alert("VIRUS - RickRoll.app ! Delete it?", "KOTEL")
+                    pt.alert("Oh... I started it :)", "KOTEL")
                     pygame.mixer.music.load("music.mp3")
                     pygame.mixer.music.play()
                     while True:
@@ -2016,9 +2017,9 @@ else:
                     pass
             elif pr == "restart":
                 dorestart = "No"
-                dorestart = pt.confirm("Вы действительно хотите Перезагрузить Bear-OS?", systemName, ("Да","Нет"))
-                if dorestart == "Да":
-                    print(Back.WHITE + Fore.RED + "Перезагрузка....")
+                dorestart = pt.confirm("D u want to restart?", systemName, ("Yes","No"))
+                if dorestart == "Yes":
+                    print(Back.WHITE + Fore.RED + "Restarting....")
                     sleep(5)
                     for i in range(40):
                         print(Back.RESET + Fore.GREEN + "")
@@ -2041,23 +2042,23 @@ else:
 
 
             elif pr == "spam":
-                spamTo = input("Куда?")
+                spamTo = input("TO?")
                 try:
-                    kolvo = int(input("Скока?"))
+                    kolvo = int(input("Times?"))
                 except:
                     print("Ошибка")
                 if spamTo != "":
                     to_mail = spamTo
-                    print(str(kolvo) + "Раз!")
+                    print(str(kolvo) + "times!")
                     for i in range(kolvo):
-                        send_mail(to_mail, systemName + " ТОП!", systemName + " ТОП!")
+                        send_mail(to_mail, systemName + " TOP!", systemName + " TOP!")
                         print("SPAM!")
                         sleep(5)
                     if defaultMail != "":
                         to_mail = defaultMail
-                    print("Готово!")
+                    print("Done!")
                 else:
-                    print("Ошибка!")
+                    print("Err!")
 
 
 
@@ -2067,24 +2068,24 @@ else:
 
 
             elif pr == "terminal":
-                print("           Терминал " + systemName)
-                execommand = input("Команда: ")
+                print("           Terminal " + systemName)
+                execommand = input("CMD: ")
                 if execommand == "$" + systemName + " system set Activate: N":
                     if activatebearos == "Y":
-                        print("Успешно!")
+                        print("Success!")
                         activatebearos = "N"
                     else:
-                        print("Ошибка! Значение Activate: N неможет быть поставленно так как значение Activate стоит на: " + activatebearos)
+                        print("Err! The value Activate: N cannot be set because the value Activate is set to:" + activatebearos)
                 elif execommand == "sudo su":
-                    print("Введите пароль для root")
-                    rootpass = input("Пароль? ")
-                    if rootpass == "root" + passset:
-                        print("Успешно!")
-                        rootexecommand = input(Back.BLACK + Fore.YELLOW + "Команда: ")
+                    print("Root Password")
+                    rootpass = input("Password? ")
+                    if rootpass == "root-" + passset:
+                        print("Success!")
+                        rootexecommand = input(Back.BLACK + Fore.YELLOW + "CMD: ")
                         if rootexecommand == "rm -rf":
-                            deletesystemQ = input(Back.RED + Fore.YELLOW + "ЭТО ОПАСНАЯ КОМАНДА! Продолжить? Y / N: ")
+                            deletesystemQ = input(Back.RED + Fore.YELLOW + "Are you sure you want to delete " + systemName + "? Y / N: ")
                             if deletesystemQ == "Y" or "y":
-                                print("Пока, " + name + " :( ...")
+                                print("Bye, " + name + " :( ...")
                                 activatebearos = "N"
                                 name = ""
                                 Computer_name = ""
@@ -2094,17 +2095,17 @@ else:
                                 phone_number = ""
                                 sleep(2)
                                 for i in range(28):
-                                    print(Back.RED + Fore.BLACK + "Удалено.")
+                                    print(Back.RED + Fore.BLACK + "Deleted.")
                                     sleep(0.1)
                                 sys.exit()
                             else:
-                                print(Back.YELLOW + Fore.BLACK + "Фух...")
+                                print(Back.YELLOW + Fore.BLACK + ":D")
                         else:
-                            print("Команда не найдена: " + rootexecommand + " <-")
+                            print("CMD not found: " + rootexecommand + " <-")
                     else:
-                        print("Неверно! " + rootpass)    
+                        print("Wrong! " + rootpass)    
                 else:
-                    print("Команда не найдена: " + execommand + " <-") 
+                    print("CMD not found: " + execommand + " <-") 
             elif pr == "redeem":
                 print(Fore.MAGENTA + "           Activate code:")
                 redeemcode = input(Fore.WHITE + Back.MAGENTA + "Code: ")
@@ -2175,7 +2176,7 @@ else:
 
 
             elif pr == "mail":
-                print("Почта")
+                print("Mail")
                 Qsend_mail = input("Send a email? Y / N: ")
                 if Qsend_mail == "Y" or "":
                     mailTo = input("Recipient: ")
@@ -2255,7 +2256,7 @@ else:
                                     balance=balance,
                                     boughtcode=boughtcode
                                 )
-                                send_html_mail(to_mail,"Успешная покупка!")
+                                send_html_mail(to_mail,"Success Purchase!")
 
                 elif Qitem == "2":
                     cost = cost2
@@ -2289,7 +2290,7 @@ else:
                                     balance=balance,
                                     boughtcode=boughtcode
                                 )
-                                send_html_mail(to_mail,"Успешная покупка!")
+                                send_html_mail(to_mail,"Success Purchase!")
                         
 
             elif pr == "addtobalance":
@@ -2350,37 +2351,37 @@ else:
             
 
             elif pr == "settings":
-                print("Настройки ⚙️")
-                print("Изменить валюту - currency ($ / GBP / RUB / HRY)")
-                print("Сменить пароль - changepassword")
-                Qdosettings = input("Действие: ")
+                print("Settings ⚙️")
+                print("Change currency - currency ($ / GBP / RUB / HRY)")
+                print("Change Password - changepassword")
+                Qdosettings = input("Change: ")
                 if Qdosettings == "currency":
-                    Qnewcurrency = input("Валюта: ")
+                    Qnewcurrency = input("Currency: ")
                     currency = Qnewcurrency
-                    print("Успешно!")
+                    print("Success!")
                 elif Qdosettings == "changepassword":
-                    newpass = input("Новый пароль: ")
-                    newpassconfirm = input("Подтвердите новый пароль: ")
+                    newpass = input("New Password: ")
+                    newpassconfirm = input("Confirm new password: ")
                     if newpass == newpassconfirm:
                         if newpass != "":
                             passset = newpass
                             data["pass"] = passset
                             writepass(data, 'data.json')
 
-                            print("Успешно! Новый пароль: " + (data["pass"]))
+                            print("Success! New Password: " + (data["pass"]))
                         else:
-                            print("Пароль не должен быть пустым!")
+                            print("The password must not be empty!")
                     else:
-                        print("Пароли не совпадают")        
+                        print("The passwords don't match!")        
 
                 else:
-                    print(Fore.RED + "неизвестное действие: " + Qdosettings + " <-")
+                    print(Fore.RED + "unknown action: " + Qdosettings + " <-")
                     print(Back.YELLOW + Fore.BLACK + "")
 
 
             elif pr == "suspendtest":
-                if makeSuspend("Это тест") == 1:
-                    print(Fore.WHITE + Back.GREEN  + "Ваш аккаунт был разблокирован!")
+                if makeSuspend("Test") == 1:
+                    print(Fore.WHITE + Back.GREEN  + "Your account has been unblocked!")
                 else:
                     MakeBan()
                     pt.alert("Вы были забанены!", systemName)
