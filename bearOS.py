@@ -22,23 +22,19 @@
 
 
 
-#--------VERSION 1.8.8, What's new?--------#
-
-#- Added currency system (RUB, $, EUR, HRY, GBP, BYN) etc.
-#- BearPay - Added card masking function (mask_card)
-#- Fixed some bugs, like: If you change currency, the balance is not changed (If i have 587 RUB and change to $ i will have 587$)
-#- Added new redeem codes
-#- BearPay now can work with Iphone (with flask server and Shortcuts POST request) INSTRUCTIONS HERE: https://placeholder.com
-#- theme changer by theme.py
+#--------VERSION 1.8.9, What's new?--------#
+#Fixed some bugs
+#Added new email template for purchase, top-up and redeem
+#Almost all functions now support English and Russian languages
+#Added Default Password property
 
 
-#--------ВЕРСИЯ 1.8.8, Что нового?--------#
-#- Добавлена система валют (RUB, $, EUR, HRY, GBP, BYN) и т.д.
-#- BearPay - Добавлена функция маскировки карт (mask_card)
-#- Исправлены некоторые баги, например: Если вы меняете валюту, баланс не меняется (Если у меня 587 RUB и я меняю на $, у меня будет 587$)
-#- Добавлены новые коды активации
-#- BearPay теперь может работать с Iphone (с flask сервером и Shortcuts POST запросом) ИНСТРУКЦИИ ЗДЕСЬ: https://placeholder.com
-#- смена темы через theme.py
+
+#--------ВЕРСИЯ 1.8.9, Что нового?--------#
+#Исправлены некоторые баги
+#Добавлен новый шаблон письма для покупки, пополнения и активации
+#Почти все функции теперь поддерживают Английский и Русский языки
+#Добавлено свойство Default Password
 
 
 
@@ -227,8 +223,9 @@ logo = ("""
 #--------PROPERTIES--------#
 forgorbearos = "Y" #forget BEAR-OS?
 checkpass = "Y" #Check password?
-defaultName = "User" #default name
-passset = "123" #default password
+defaultName = "Admin" #default name
+defaultPassword = "" #default password
+passset = ""
 checkaccaunt = "Y" #check accaunt
 activatebearos = "N" #Activate Bear-OS
 BearOSVersion = "1.8.9" # Version Of Bear-OS
@@ -283,7 +280,8 @@ if SHOWPROPERTIES == True:
     print(f"System Name: {systemName}")
     print(f"Check Password: {checkpass}")
     print(f"Default Name: {defaultName}")
-    print(f"Default Password: {passset}")
+    print(f"Password: {passset}")
+    print(f"Default Password: {defaultPassword}")
     print(f"Check Accaunt: {checkaccaunt}")
     print(f"Activate Bear-OS: {activatebearos}")
     print(f"Default Mail: {defaultMail}")
@@ -1049,7 +1047,10 @@ if selectedLang == "RU":
             print(Back.RESET + Fore.GREEN + "Добро пожаловать в установщик " + systemName)
             name = input("Введите ваше имя: ")
             if name == "":
-                name = "(Unknown)"
+                if defaultName == "":
+                    name = "(Unknown)"
+                else:
+                    name = defaultName
             else:
                 pass
             print("Здравствуйте, " + name)
@@ -1066,8 +1067,11 @@ if selectedLang == "RU":
                 
             passset = input("Введите Пароль для аккаунта " + name + ": ")
             if passset == "":
-                passset = "(Unknown)"
-                checkpass = "N"
+                if defaultPassword == "":
+                    passset = "(Unknown)"
+                    checkpass = "N"
+                else:
+                    passset = defaultPassword
             else:
                 pass
             data["pass"] = passset
@@ -1253,11 +1257,11 @@ if selectedLang == "RU":
                     os.system(Copenfile)
             elif pr == "About":
                 print(Back.YELLOW + Fore.BLACK + logo)
-                print(Back.YELLOW + Fore.BLACK + "               INFO:")
+                print(Back.YELLOW + Fore.BLACK + "               ИНФОРМАЦИЯ:")
                 print(Back.YELLOW + Fore.BLACK + "")
-                print(Back.YELLOW + Fore.BLACK + systemName + " Version " + BearOSVersion)
+                print(Back.YELLOW + Fore.BLACK + systemName + " Версия " + BearOSVersion)
                 print(Back.YELLOW + Fore.BLACK + "")
-                print(Back.YELLOW + Fore.BLACK + "                PC:")
+                print(Back.YELLOW + Fore.BLACK + "                ПК:")
                 print(Back.YELLOW + Fore.BLACK + "")
                 print(Back.YELLOW + Fore.BLACK + "Имя Пользователя: " + name + " Имя Компьютера: " + Computer_name)
                 print(Back.YELLOW + Fore.BLACK + "")
@@ -1381,7 +1385,7 @@ if selectedLang == "RU":
                 elif execommand == "sudo su":
                     print("Введите пароль для root")
                     rootpass = input("Пароль? ")
-                    if rootpass == "root" + passset:
+                    if rootpass == "root-" + passset:
                         print("Успешно!")
                         rootexecommand = input(Back.BLACK + Fore.YELLOW + "Команда: ")
                         if rootexecommand == "rm -rf":
@@ -1761,7 +1765,10 @@ else:
             print(Back.RESET + Fore.GREEN + "Welcome to the installer " + systemName)
             name = input("Enter your name: ")
             if name == "":
-                name = "(Unknown)"
+                if defaultName == "":
+                    name = "(Unknown)"
+                else:
+                    name = defaultName
             else:
                 pass
             print("Hello, " + name)
@@ -1778,8 +1785,11 @@ else:
                 
             passset = input("Enter your "+ name +" account password: ")
             if passset == "":
-                passset = "(Unknown)"
-                checkpass = "N"
+                if defaultPassword == "":
+                    passset = "(Unknown)"
+                    checkpass = "N"
+                else:
+                    passset = defaultPassword
             else:
                 pass
             data["pass"] = passset
