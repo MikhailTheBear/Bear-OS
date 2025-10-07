@@ -231,11 +231,11 @@ defaultName = "User" #default name
 passset = "123" #default password
 checkaccaunt = "Y" #check accaunt
 activatebearos = "N" #Activate Bear-OS
-BearOSVersion = "1.8.8" # Version Of Bear-OS
+BearOSVersion = "1.8.9" # Version Of Bear-OS
 systemName = "Bear-OS" # Bear-OS System Name
 to_mail = "" #default mail IMPORTANT: DONT CHANGE THIS!
 defaultMail = "" #default mail
-errorName = "" #default error name
+errorName = "(Unknown)" #default error name
 defaultСurrency = "$" #default currency
 currency = "₽" #set currency
 product = "(Unknown)" #default product
@@ -284,6 +284,21 @@ if SHOWPROPERTIES == True:
     print(f"Check Password: {checkpass}")
     print(f"Default Name: {defaultName}")
     print(f"Default Password: {passset}")
+    print(f"Check Accaunt: {checkaccaunt}")
+    print(f"Activate Bear-OS: {activatebearos}")
+    print(f"Default Mail: {defaultMail}")
+    print(f"Default Currency: {defaultСurrency}")
+    print(f"Currency: {currency}")
+    print(f"Default Language: {defaultLanguage}")
+    print(f"Ask Language: {askLanguage}")
+    print(f"Product: {product}")
+    print(f"Cost: {cost}")
+    print(f"Balance: {balance}")
+    print(f"Phone Number: {phone_number}")
+    print(f"SMTP Protocol: {SMTPPROTOCOL}")
+    print(f"SMTP Port: {SMTPPORT}")
+    print(f"Copyright: {COPYRIGHT}")
+    print(f"Copyright (EN): {COPYRIGHTEN}")
     print("\n")
     input("Press ENTER to continue...")
 
