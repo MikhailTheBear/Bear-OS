@@ -22,7 +22,17 @@
 
 
 
-#--------VERSION 1.8.9, What's new?--------#
+
+#░░███╗░░░░░░█████╗░
+#░████║░░░░░██╔══██╗
+#██╔██║░░░░░╚██████║
+#╚═╝██║░░░░░░╚═══██║
+#███████╗██╗░█████╔╝
+#╚══════╝╚═╝░╚════╝░
+
+
+
+#--------VERSION 1.9, What's new?--------#
 #Fixed some bugs
 #Added new email template for purchase, top-up and redeem
 #Almost all functions now support English and Russian languages
@@ -30,7 +40,7 @@
 
 
 
-#--------ВЕРСИЯ 1.8.9, Что нового?--------#
+#--------ВЕРСИЯ 1.9, Что нового?--------#
 #Исправлены некоторые баги
 #Добавлен новый шаблон письма для покупки, пополнения и активации
 #Почти все функции теперь поддерживают Английский и Русский языки
@@ -212,6 +222,14 @@ logo = ("""
 """)
 
 
+TextVersion = """
+░░███╗░░░░░░█████╗░
+░████║░░░░░██╔══██╗
+██╔██║░░░░░╚██████║
+╚═╝██║░░░░░░╚═══██║
+███████╗██╗░█████╔╝
+╚══════╝╚═╝░╚════╝░
+"""
 
 
 
@@ -228,7 +246,7 @@ defaultPassword = "" #default password
 passset = ""
 checkaccaunt = "Y" #check accaunt
 activatebearos = "N" #Activate Bear-OS
-BearOSVersion = "1.8.9" # Version Of Bear-OS
+BearOSVersion = "1.9" # Version Of Bear-OS
 systemName = "Bear-OS" # Bear-OS System Name
 to_mail = "" #default mail IMPORTANT: DONT CHANGE THIS!
 defaultMail = "" #default mail
@@ -272,7 +290,7 @@ Motherboard = "Dinoboard A0.1"
 SHOWPROPERTIES = True
 
 if SHOWPROPERTIES == True:
-    print(logo + "\n----------------------------\n          PROPERTIES:\n----------------------------")
+    print(logo + TextVersion +"\n----------------------------\n          PROPERTIES:\n----------------------------")
 
     print(f"VERSION: {BearOSVersion}")
     print("\n")
@@ -427,9 +445,9 @@ errors = ["Нельзя делить на ноль!","","","",""]
 errorsen = ["You can't divide by zero!","","","",""]
 
 errorInfo = [
-    "ℹ️ Эта ошибка связана с ошибкой SMTP (У вас включен VPN, У вас нет Интернета и т.д. (Иногда может случится из-за бага " + systemName + ") Чаще всего у ошибки бывает код 502!)",
-    "ℹ️ Неопределённая ошибка! Такое может случится когда сервис/библиотека не может нормально описать ошибку. Чаще всего это выглядит так: '{}'",
-    "Кажись программа хотела другой тип данных (В этом случае целое число (int) )"
+    "ℹ️ Эта ошибка связана с ошибкой SMTP (У вас включен VPN, У вас нет Интернета и т.д. (Иногда может случится из-за бага " + systemName + ") Чаще всего у ошибки бывает код 502!) | ℹ️ This error is related to the loss of SMTP (You have a VPN enabled, You have no Internet, etc. (sometimes it can occur due to the "+systemName+" bug) Often the error code is 502!)",
+    "ℹ️ Неопределённая ошибка! Это может произойти, когда служба/библиотека не может правильно описать ошибку. Чаще всего она выглядит так: '{}' | Undefined error! This can happen when a service/library can't properly describe the error. It most often looks like this: '{}'",
+    "ℹ️ Кажись программа хотела другой тип данных (В этом случае целое число (int) ) | It seems the program wanted a different data type (in this case, an integer (int) )"
 ]
 
 
@@ -1189,8 +1207,20 @@ if selectedLang == "RU":
         print(Back.YELLOW + Fore.BLACK + name + "@" + Computer_name + " ~ % " + "Теперь вы можете открыть любую программу которая указана в списке.")
         print(name + "@" + Computer_name + " ~ % " + "Список программ:")
         print(name + "@" + Computer_name + " ~ % " + "Калькулятор  --  calc ")
+        print(name + "@" + Computer_name + " ~ % " + "Открыть файл  --  open ")
+        print(name + "@" + Computer_name + " ~ % " + "О системе  --  About ")
+        print(name + "@" + Computer_name + " ~ % " + "KOTEL  --  Kotel ")
+        print(name + "@" + Computer_name + " ~ % " + "Почта  --  mail ")
+        print(name + "@" + Computer_name + " ~ % " + "Привязать почту  --  ConnectMail ")
+        print(name + "@" + Computer_name + " ~ % " + "Настройки  --  settings ")
+        print(name + "@" + Computer_name + " ~ % " + "Активировать код  -- redeem ")
+        print(name + "@" + Computer_name + " ~ % " + "Магазин  --  store ")
         print(name + "@" + Computer_name + " ~ % " + "Очистить Корзину  --  Clear RB ")
-        print(name + "@" + Computer_name + " ~ % " + "Terminal  --  terminal ")
+        print(name + "@" + Computer_name + " ~ % " + "Терминал  --  terminal ")
+        print(name + "@" + Computer_name + " ~ % " + "Пополнить баланс  --  addtobalance ")
+        print(name + "@" + Computer_name + " ~ % " + "Верифицировать  --  verify ")
+        print(name + "@" + Computer_name + " ~ % " + "Выйти из аккаунта  --  logout ")
+        print(name + "@" + Computer_name + " ~ % " + "Перезагрузить  --  restart ")
         print(name + "@" + Computer_name + " ~ % " + "Выключить  --  shutdown ")
         print(Back.YELLOW + Fore.BLACK + "")
         print(Back.YELLOW + Fore.BLACK + "")
@@ -1907,8 +1937,20 @@ else:
         print(Back.YELLOW + Fore.BLACK + name + "@" + Computer_name + " ~ % " + "Now you can open any program that is listed.")
         print(name + "@" + Computer_name + " ~ % " + "List of programs:")
         print(name + "@" + Computer_name + " ~ % " + "calc ")
+        print(name + "@" + Computer_name + " ~ % " + "open ")
+        print(name + "@" + Computer_name + " ~ % " + "About ")
+        print(name + "@" + Computer_name + " ~ % " + "Kotel ")
         print(name + "@" + Computer_name + " ~ % " + "Clear RB ")
         print(name + "@" + Computer_name + " ~ % " + "terminal ")
+        print(name + "@" + Computer_name + " ~ % " + "redeem ")
+        print(name + "@" + Computer_name + " ~ % " + "verify ")
+        print(name + "@" + Computer_name + " ~ % " + "mail ")
+        print(name + "@" + Computer_name + " ~ % " + "logout ")
+        print(name + "@" + Computer_name + " ~ % " + "store ")
+        print(name + "@" + Computer_name + " ~ % " + "addtobalance ")
+        print(name + "@" + Computer_name + " ~ % " + "settings ")
+        print(name + "@" + Computer_name + " ~ % " + "ConnectMail ")
+        print(name + "@" + Computer_name + " ~ % " + "restart ")
         print(name + "@" + Computer_name + " ~ % " + "shutdown ")
         print(Back.YELLOW + Fore.BLACK + "")
         print(Back.YELLOW + Fore.BLACK + "")

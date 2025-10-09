@@ -1,4 +1,4 @@
-main_color = ""
 installer_color = "MAGENTA"
-error_color = ""
-success_color = ""
+#main_color = ""
+#error_color = ""
+#success_color = ""
