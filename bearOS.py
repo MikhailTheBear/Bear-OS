@@ -32,19 +32,14 @@
 
 
 
-#--------VERSION 1.9, What's new?--------#
+#--------VERSION 1.9.1, What's new?--------#
 #Fixed some bugs
-#Added new email template for purchase, top-up and redeem
-#Almost all functions now support English and Russian languages
-#Added Default Password property
 
 
 
-#--------ВЕРСИЯ 1.9, Что нового?--------#
+#--------ВЕРСИЯ 1.9.1, Что нового?--------#
 #Исправлены некоторые баги
-#Добавлен новый шаблон письма для покупки, пополнения и активации
-#Почти все функции теперь поддерживают Английский и Русский языки
-#Добавлено свойство Default Password
+
 
 
 
@@ -222,7 +217,7 @@ logo = ("""
 """)
 
 
-TextVersion = """
+TextRelease = """
 ░░███╗░░░░░░█████╗░
 ░████║░░░░░██╔══██╗
 ██╔██║░░░░░╚██████║
@@ -239,14 +234,14 @@ TextVersion = """
 
 
 #--------PROPERTIES--------#
-forgorbearos = "Y" #forget BEAR-OS?
+forgorbearos = "N" #forget BEAR-OS?
 checkpass = "Y" #Check password?
 defaultName = "Admin" #default name
 defaultPassword = "" #default password
 passset = ""
 checkaccaunt = "Y" #check accaunt
 activatebearos = "N" #Activate Bear-OS
-BearOSVersion = "1.9" # Version Of Bear-OS
+BearOSVersion = "1.9.1" # Version Of Bear-OS
 systemName = "Bear-OS" # Bear-OS System Name
 to_mail = "" #default mail IMPORTANT: DONT CHANGE THIS!
 defaultMail = "" #default mail
@@ -290,7 +285,7 @@ Motherboard = "Dinoboard A0.1"
 SHOWPROPERTIES = True
 
 if SHOWPROPERTIES == True:
-    print(logo + TextVersion +"\n----------------------------\n          PROPERTIES:\n----------------------------")
+    print(logo + TextRelease +"\n----------------------------\n          PROPERTIES:\n----------------------------")
 
     print(f"VERSION: {BearOSVersion}")
     print("\n")
@@ -406,8 +401,13 @@ def makeSuspend(suspendreason):
 
             else:
                 return 0
-
-        QascCode = int(input("Код: "))
+        try:
+            QascCode = int(input("Код: "))
+        except Exception as err:
+            print("Err: " + str(err))
+            if "int" in str(err):
+                print(errorInfo[2])
+            return 0
         if QascCode == suspendcode:
             return 1
         else:
