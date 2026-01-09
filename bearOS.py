@@ -32,12 +32,12 @@
 
 
 
-#--------VERSION 1.9.1, What's new?--------#
+#--------VERSION 1.9.2, What's new?--------#
 #Fixed some bugs
 
 
 
-#--------ВЕРСИЯ 1.9.1, Что нового?--------#
+#--------ВЕРСИЯ 1.9.2, Что нового?--------#
 #Исправлены некоторые баги
 
 
@@ -73,6 +73,7 @@ import bearpay
 from mask_card import mask_card_number
 import theme
 from theme import *
+import beargpt
 
 
 
@@ -83,54 +84,65 @@ sleep(1)
 #--------READ/WRITE JSON--------#
 
 
+def SaveData(name, Computer_name, passset, phone_number, to_mail):
+    data = {
+        "name": name,
+        "Computer_name": Computer_name,
+        "passset": passset,
+        "phone_number": phone_number,
+        "to_mail": to_mail
+    }
+
+    file_path = "data.json"
+
+    # Проверяем, есть ли уже файл
+    if os.path.exists(file_path):
+        try:
+            with open(file_path, "r", encoding="utf-8") as file:
+                existing_data = json.load(file)
+        except json.JSONDecodeError:
+            existing_data = {}
+    else:
+        existing_data = {}
+
+    # Обновляем данные
+    existing_data.update(data)
+
+    # Записываем обратно
+    with open(file_path, "w", encoding="utf-8") as file:
+        json.dump(existing_data, file, indent=4, ensure_ascii=False)
+
+    
 
 
+# --- Загрузка данных ---
+def GetData():
+    file_path = "data.json"
 
-def writepass(data,filenamepass):
-    data = json.dumps(data)
-    data = json.loads(str(data))
-    with open(filenamepass, 'w', encoding='utf-8') as file:
-        json.dump(data, file, indent=4)
+    if not os.path.exists(file_path):
+        
+        return None
 
+    try:
+        with open(file_path, "r", encoding="utf-8") as file:
+            data = json.load(file)
 
-def readpass(filenamepass):
-    with open(filenamepass, 'r', encoding='utf-8') as file: 
-        return json.load(file)   
+        name = data.get("name", "")
+        Computer_name = data.get("Computer_name", "")
+        passset = data.get("passset", "")
+        phone_number = data.get("phone_number", "")
+        to_mail = data.get("to_mail", "")
 
+        
+        return name, Computer_name, passset, phone_number, to_mail
 
-def writeuser(data2,filenameuser):
-    data2 = json.dumps(data2)
-    data2 = json.loads(str(data2))
-    with open(filenameuser, 'w', encoding='utf-8') as file2:
-        json.dump(data2, file2, indent=4)
+    except json.JSONDecodeError:
+        print("❌ Err data.json")
+        return None
 
+with open("data.json", "r", encoding="utf-8") as file:
+    data = json.load(file)
 
-def readuser(filenameuser):
-    with open(filenameuser, 'r', encoding='utf-8') as file2: 
-        return json.load(file2) 
-
-def writelc(data3,filenamelc):
-    data3 = json.dumps(data3)
-    data3 = json.loads(str(data3))
-    with open(filenamelc, 'w', encoding='utf-8') as file3:
-        json.dump(data3, file3, indent=4)
-
-
-def readlc(filenamelc):
-    with open(filenamelc, 'r', encoding='utf-8') as file3: 
-        return json.load(file3) 
-
-
-def writeban(data4,filenameban):
-    data3 = json.dumps(data3)
-    data3 = json.loads(str(data3))
-    with open(filenameban, 'w', encoding='utf-8') as file4:
-        json.dump(data4, file4, indent=4)
-
-
-def readban(filenameban):
-    with open(filenameban, 'r', encoding='utf-8') as file4: 
-        return json.load(file4)
 
 #data["pass"].append("cat")
 
@@ -197,7 +209,7 @@ def MakeBan():
 
 data3["licensekey"] = licensekeygen()
 
-writelc(data3, 'yourlicensekey.json')
+
 
 
 
@@ -239,9 +251,11 @@ checkpass = "Y" #Check password?
 defaultName = "Admin" #default name
 defaultPassword = "" #default password
 passset = ""
+loginAtts = 5 #login attempts (-1 for turn off)
+canLoadData = "Y"
 checkaccaunt = "Y" #check accaunt
 activatebearos = "N" #Activate Bear-OS
-BearOSVersion = "1.9.1" # Version Of Bear-OS
+BearOSVersion = "1.9.2" # Version Of Bear-OS
 systemName = "Bear-OS" # Bear-OS System Name
 to_mail = "" #default mail IMPORTANT: DONT CHANGE THIS!
 defaultMail = "" #default mail
@@ -296,6 +310,7 @@ if SHOWPROPERTIES == True:
     print(f"Password: {passset}")
     print(f"Default Password: {defaultPassword}")
     print(f"Check Accaunt: {checkaccaunt}")
+    print(f"Can Load Data: {canLoadData}")
     print(f"Activate Bear-OS: {activatebearos}")
     print(f"Default Mail: {defaultMail}")
     print(f"Default Currency: {defaultСurrency}")
@@ -339,19 +354,19 @@ def createCaptcha():
 def loading():
     sleep(randint(1,3))
     print("\n"*28)
-    print(">...... [0%]")
+    print(">..... [0%]")
     sleep(randint(1,3))
     print("\n"*28)
-    print("=>..... [20%]")
+    print("=>.... [20%]")
     sleep(randint(1,3))
     print("\n"*28)
-    print("==>.... [40%]")
+    print("==>... [40%]")
     sleep(randint(1,3))
     print("\n"*28)
-    print("===>... [60%]")
+    print("===>.. [60%]")
     sleep(randint(1,3))
     print("\n"*28)
-    print("====>.. [80%]")
+    print("====>. [80%]")
     sleep(randint(1,3))
     print("\n"*28)
     print("=====> [100%]")
@@ -892,14 +907,7 @@ def checkwordsen(to_mail, name, Computer_name, mailText, mailSubject):
 
 
 
-data = {
-    "pass" : passset
-}
 
-
-data2 = {
-    "user" : []
-}
 
 
 
@@ -918,13 +926,13 @@ else:
         name = defaultName
     Computer_name = "(Unknown)"
     if passset == "":
-        checkpass = "N"
-    print(Back.RED + Fore.YELLOW + "No name!")
-    pygame.mixer.music.load("error.mp3")
-    pygame.mixer.music.play()
-#YoN = pt.confirm("!", name, ("Да","Нет"))
-#print(YoN)
-#print(data["pass"])
+        if canLoadData == "N":
+            checkpass = "N"
+            print(Back.RED + Fore.YELLOW + "No name!")
+            pygame.mixer.music.load("error.mp3")
+            pygame.mixer.music.play()
+
+
 
 print(Back.RESET + Fore.GREEN + "")
 print(Back.RESET + Fore.GREEN + "")
@@ -1072,9 +1080,8 @@ if selectedLang == "RU":
             else:
                 pass
             print("Здравствуйте, " + name)
-            data2["user"].append(name)
+            
 
-            writeuser(data2, 'user.json')
             Computer_name = input("Введите имя компьютера: ")
             if Computer_name == "":
                 Computer_name = "(Unknown)"
@@ -1083,7 +1090,7 @@ if selectedLang == "RU":
             print(name + ", вы назвали компьютер: " + Computer_name)
             
                 
-            passset = input("Введите Пароль для аккаунта " + name + ": ")
+            passset = str(input("Введите Пароль для аккаунта " + name + ": "))
             if passset == "":
                 if defaultPassword == "":
                     passset = "(Unknown)"
@@ -1092,9 +1099,9 @@ if selectedLang == "RU":
                     passset = defaultPassword
             else:
                 pass
-            data["pass"] = passset
+            
 
-            writepass(data, 'data.json')
+        
 
             phone_number = input("Ваш номер телефона: ")
 
@@ -1127,8 +1134,11 @@ if selectedLang == "RU":
             # else:
             #     pass
 
+
+            SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail)
+
             predupr = "Письмо было отправлено на вашу почту. Если его нет проверте                          вкладку 'Спам'! Лицензионный Ключ?" 
-            print(name + ", Вы поставили пароль: " + (data["pass"]))
+            print(name + ", Вы поставили пароль: " + str(passset))
             licenseyes = pt.confirm("У вас есть Лицензионный Ключ?", "Bear-OS", ("Да","Нет"))
             if licenseyes == "Да":
                 activatebearos = "Y"
@@ -1176,19 +1186,31 @@ if selectedLang == "RU":
                     pygame.mixer.music.play()
                     installsuccess = "no"
                     stdo = input(Fore.GREEN + "Чтобы начать установку пропишите команду: " + Fore.YELLOW + "/start download: ")
+        if canLoadData == "Y":
+            loadedData = GetData()
+            name, Computer_name, passset, phone_number, to_mail = loadedData
+
         if checkaccaunt == "Y":
             print("---------------------------- \n Войдите в аккаунт!\n----------------------------")
             pt.alert("Выбирите Акаунт", systemName, button=name)
         if checkpass == "Y":
             passwordsys = pt.password("Пароль", name)
-            if passwordsys == (data["pass"]):
+            if passwordsys == passset:
                 pass
             else:
                 pt.alert("Неправильный пароль!", name)
-                while passwordsys != (data["pass"]):
-                    passwordsys = pt.password("Пароль", name)
-                    if passwordsys != (data["pass"]):
-                        pt.alert("Неправильный пароль!", name)
+                while passwordsys != passset:
+                    if loginAtts != 0:
+                        passwordsys = pt.password("Пароль", name)
+                        if passwordsys != passset:
+                            loginAtts = loginAtts - 1
+                            if loginAtts <= -1:
+                                pt.alert("Неправильный пароль!", name)
+                            else:    
+                                pt.alert("Неправильный пароль! (Осталось " + str(loginAtts) + " попыток)", name)
+                    else:
+                        pt.alert("Попытки входа закончились!", name)
+                        sys.exit()
 
                 pass
         
@@ -1294,6 +1316,10 @@ if selectedLang == "RU":
                 print(Back.YELLOW + Fore.BLACK + "                ПК:")
                 print(Back.YELLOW + Fore.BLACK + "")
                 print(Back.YELLOW + Fore.BLACK + "Имя Пользователя: " + name + " Имя Компьютера: " + Computer_name)
+                print(Back.YELLOW + Fore.BLACK + "")
+                print(Back.YELLOW + Fore.BLACK + "Email: " + to_mail)
+                print(Back.YELLOW + Fore.BLACK + "")
+                print(Back.YELLOW + Fore.BLACK + "Телефон: " + str(phone_number))
                 print(Back.YELLOW + Fore.BLACK + "")
                 print(Back.YELLOW + Fore.BLACK + "Верифицированно: " + str(verify))
                 print(Back.YELLOW + Fore.BLACK + "")
@@ -1683,6 +1709,10 @@ if selectedLang == "RU":
 
                 except Exception as ex:
                     print("An error has occurred: " + str(ex))
+
+
+            elif pr == "beargpt":
+                beargpt.start('ru')
             
 
             elif pr == "settings":
@@ -1700,10 +1730,11 @@ if selectedLang == "RU":
                     if newpass == newpassconfirm:
                         if newpass != "":
                             passset = newpass
-                            data["pass"] = passset
-                            writepass(data, 'data.json')
+                            SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail)
+                            
+                            
 
-                            print("Успешно! Новый пароль: " + (data["pass"]))
+                            print("Успешно! Новый пароль: " + passset)
                         else:
                             print("Пароль не должен быть пустым!")
                     else:
@@ -1802,9 +1833,9 @@ else:
             else:
                 pass
             print("Hello, " + name)
-            data2["user"].append(name)
+            
 
-            writeuser(data2, 'user.json')
+            
             Computer_name = input("Enter your computer name: ")
             if Computer_name == "":
                 Computer_name = "(Unknown)"
@@ -1813,7 +1844,7 @@ else:
             print(name + ", you named the computer: " + Computer_name)
             
                 
-            passset = input("Enter your "+ name +" account password: ")
+            passset = str(input("Enter your "+ name +" account password: "))
             if passset == "":
                 if defaultPassword == "":
                     passset = "(Unknown)"
@@ -1824,7 +1855,7 @@ else:
                 pass
             data["pass"] = passset
 
-            writepass(data, 'data.json')
+            
 
             phone_number = input("Your phone number: ")
 
@@ -1856,9 +1887,10 @@ else:
             #     sys.exit()
             # else:
             #     pass
+            SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail)
 
             predupr = "The letter was sent to your email. If it is not there, check the 'Spam' tab! License Key?" 
-            print(name + ", You have set a password: " + (data["pass"]))
+            print(name + ", You have set a password: " + passset)
             licenseyes = pt.confirm("Do you have a License Key?", "Bear-OS", ("Yes","No"))
             if licenseyes == "Yes":
                 activatebearos = "Y"
@@ -1906,19 +1938,31 @@ else:
                     pygame.mixer.music.play()
                     installsuccess = "no"
                     stdo = input(Fore.GREEN + "To start the installation, enter the command: " + Fore.YELLOW + "/start download: ")
+        if canLoadData == "Y":
+            loadedData = GetData()
+            name, Computer_name, passset, phone_number, to_mail = loadedData
+
         if checkaccaunt == "Y":
             print("---------------------------- \n Login to your account!\n----------------------------")
             pt.alert("Select Account", systemName, button=name)
         if checkpass == "Y":
             passwordsys = pt.password("Password", name)
-            if passwordsys == (data["pass"]):
+            if passwordsys == passset:
                 pass
             else:
                 pt.alert("Incorrect password!", name)
-                while passwordsys != (data["pass"]):
-                    passwordsys = pt.password("Password", name)
-                    if passwordsys != (data["pass"]):
-                        pt.alert("Incorrect password!", name)
+                while passwordsys != passset:
+                    if loginAtts != 0:
+                        passwordsys = pt.password("Password", name)
+                        if passwordsys != passset:
+                            loginAtts = loginAtts - 1
+                            if loginAtts <= -1:
+                                pt.alert("Incorrect password!", name)
+                            else:    
+                                pt.alert("Incorrect password! ( " + str(loginAtts) + " Atts left)", name)
+                    else:
+                        pt.alert("Login attempts ended!", name)
+                        sys.exit()
 
                 pass
         
@@ -2024,6 +2068,10 @@ else:
                 print(Back.YELLOW + Fore.BLACK + "                PC:")
                 print(Back.YELLOW + Fore.BLACK + "")
                 print(Back.YELLOW + Fore.BLACK + "Username: " + name + " Computer Name: " + Computer_name)
+                print(Back.YELLOW + Fore.BLACK + "")
+                print(Back.YELLOW + Fore.BLACK + "Email: " + to_mail)
+                print(Back.YELLOW + Fore.BLACK + "")
+                print(Back.YELLOW + Fore.BLACK + "Phone: " + str(phone_number))
                 print(Back.YELLOW + Fore.BLACK + "")
                 print(Back.YELLOW + Fore.BLACK + "Verified: " + str(verify))
                 print(Back.YELLOW + Fore.BLACK + "")
@@ -2415,6 +2463,9 @@ else:
 
                 except Exception as ex:
                     print("An error has occurred: " + str(ex))
+
+            elif pr == "beargpt":
+                beargpt.start('en')
             
 
             elif pr == "settings":
@@ -2432,10 +2483,10 @@ else:
                     if newpass == newpassconfirm:
                         if newpass != "":
                             passset = newpass
-                            data["pass"] = passset
-                            writepass(data, 'data.json')
+                            SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail)
+                            
 
-                            print("Success! New Password: " + (data["pass"]))
+                            print("Success! New Password: " + passset)
                         else:
                             print("The password must not be empty!")
                     else:
@@ -2482,7 +2533,7 @@ else:
 
 #-English-#
 
-#Copyright © 2023-2025 MikhailTheBear. All rights reserved.
+#Copyright © 2023-2026 MikhailTheBear. All rights reserved.
 #Customize it as you want, but do not delete mention of the Bear-OS project.
 #Please do not delete this lines.
 #deleting or changing this lines is a violation of the license agreement.
@@ -2492,7 +2543,7 @@ else:
 
 #-Russian-#
 
-#copyright © 2023-2025 MikhailTheBear. Все права защищены.
+#copyright © 2023-2026 MikhailTheBear. Все права защищены.
 #Кастомизируйте его как хотите, но не удаляйте упоминание проекта Bear-OS.
 #Пожалуйста, не удаляйте эти строки.
 #Удаление или изменение этих строк является нарушением лицензионного соглашения.
