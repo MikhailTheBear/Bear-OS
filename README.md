@@ -21,10 +21,18 @@ bash <(curl -fsSL https://raw.githubusercontent.com/MikhailTheBear/Bear-OS/refs/
 
 For Windows🪟:
 
-Run this command in CMD
+Run this commands in CMD:
 
 ```
 git clone https://github.com/MikhailTheBear/Bear-OS.git
+```
+
+```
+pip3 install pygame colorama uuid nextcord twilio tk pyautogui
+```
+OR (If you just have pip)
+```
+pip install pygame colorama uuid nextcord twilio tk pyautogui
 ```
 
 # RU🇷🇺
@@ -52,6 +60,16 @@ bash <(curl -fsSL https://raw.githubusercontent.com/MikhailTheBear/Bear-OS/refs/
 
 Для Windows🪟:
 
+Выполните эти команды в командной строке:
+
 ```
 git clone https://github.com/MikhailTheBear/Bear-OS.git
+```
+
+```
+pip3 install pygame colorama uuid nextcord twilio tk pyautogui
+```
+ИЛИ (Если у вас просто pip)
+```
+pip install pygame colorama uuid nextcord twilio tk pyautogui
 ```
