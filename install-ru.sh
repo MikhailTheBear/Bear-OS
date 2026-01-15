@@ -32,9 +32,9 @@ if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
     read -r answer
 
     if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
-        pip3 install pygame colorama uuid nextcord twilio tk pyautogui
+        pip3 install pygame colorama uuid nextcord twilio tk pyautogui flask
     else
-        pip install pygame colorama uuid nextcord twilio tk pyautogui
+        pip install pygame colorama uuid nextcord twilio tk pyautogui flask
     fi
 
     
