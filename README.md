@@ -28,11 +28,11 @@ git clone https://github.com/MikhailTheBear/Bear-OS.git
 ```
 
 ```
-pip3 install pygame colorama uuid nextcord twilio tk pyautogui
+pip3 install pygame colorama uuid nextcord twilio tk pyautogui flask
 ```
 OR (If you just have pip)
 ```
-pip install pygame colorama uuid nextcord twilio tk pyautogui
+pip install pygame colorama uuid nextcord twilio tk pyautogui flask
 ```
 
 # RU🇷🇺
@@ -67,9 +67,9 @@ git clone https://github.com/MikhailTheBear/Bear-OS.git
 ```
 
 ```
-pip3 install pygame colorama uuid nextcord twilio tk pyautogui
+pip3 install pygame colorama uuid nextcord twilio tk pyautogui flask
 ```
 ИЛИ (Если у вас просто pip)
 ```
-pip install pygame colorama uuid nextcord twilio tk pyautogui
+pip install pygame colorama uuid nextcord twilio tk pyautogui flask
 ```
