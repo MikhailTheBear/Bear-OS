@@ -146,14 +146,6 @@ with open("data.json", "r", encoding="utf-8") as file:
     data = json.load(file)
 
 
-#data["pass"].append("cat")
-
-#writepass(data, 'data.json')
-
-#print(readpass('data.json'))
-
-#(data["pass"][0])
-
 
 
 #--------License Key Geniration--------#
@@ -235,7 +227,7 @@ TextRelease = """
 
 
 #--------PROPERTIES--------#
-forgorbearos = "Y" #forget BEAR-OS?
+forgorbearos = "N" #forget BEAR-OS?
 checkpass = "Y" #Check password?
 defaultName = "Admin" #default name
 defaultPassword = "" #default password
@@ -285,7 +277,7 @@ Motherboard = "Dinoboard A0.1"
 #--------SHOW PROPERTIES--------#
 
 
-SHOWPROPERTIES = True
+SHOWPROPERTIES = True #Shows this menu
 
 if SHOWPROPERTIES == True:
     print(logo + TextRelease +"\n----------------------------\n          PROPERTIES:\n----------------------------")
@@ -1512,6 +1504,7 @@ if selectedLang == "RU":
                                     redeemcode=redeemcode
                                 )
                                 send_html_mail(to_mail,"Успешная покупка!")
+                                SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail, activatebearos=activatebearos)
                         else:
                             pass
 
@@ -2267,6 +2260,7 @@ else:
                                     BuyIDNow=BuyIDNow
                                 )
                                 send_html_mail(to_mail,"Successful purchase!")
+                                SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail, activatebearos=activatebearos)
                         else:
                             pass
 
