@@ -32,19 +32,19 @@
 
 
 
-#--------VERSION 1.9.2, What's new?--------#
+#--------VERSION 1.9.3, What's new?--------#
 #Fixed some bugs
 
 
 
-#--------ВЕРСИЯ 1.9.2, Что нового?--------#
+#--------ВЕРСИЯ 1.9.3, Что нового?--------#
 #Исправлены некоторые баги
 
 
 
 
 #--------IMPORTS--------#
-from time import sleep
+from time import *
 import config
 from config import password, from_email
 import json
@@ -84,13 +84,14 @@ sleep(1)
 #--------READ/WRITE JSON--------#
 
 
-def SaveData(name, Computer_name, passset, phone_number, to_mail):
+def SaveData(name, Computer_name, passset, phone_number, to_mail, activatebearos):
     data = {
         "name": name,
         "Computer_name": Computer_name,
         "passset": passset,
         "phone_number": phone_number,
-        "to_mail": to_mail
+        "to_mail": to_mail,
+        "activatebearos": activatebearos
     }
 
     file_path = "data.json"
@@ -132,9 +133,10 @@ def GetData():
         passset = data.get("passset", "")
         phone_number = data.get("phone_number", "")
         to_mail = data.get("to_mail", "")
+        activatebearos = data.get("activatebearos", "")
 
         
-        return name, Computer_name, passset, phone_number, to_mail
+        return name, Computer_name, passset, phone_number, to_mail, activatebearos
 
     except json.JSONDecodeError:
         print("❌ Err data.json")
@@ -151,10 +153,7 @@ with open("data.json", "r", encoding="utf-8") as file:
 #print(readpass('data.json'))
 
 #(data["pass"][0])
-    
-data3 = {
-    "licensekey" : ""
-}
+
 
 
 #--------License Key Geniration--------#
@@ -181,12 +180,7 @@ def MakeError():
     print(Back.BLUE + Fore.WHITE + "")
     print(Back.BLUE + Fore.WHITE + ":(")
     print(Back.BLUE + Fore.WHITE + "")
-    print(Back.BLUE + Fore.WHITE + "На вашем ПК Возникла Ошибка!")
-    print(Back.BLUE + Fore.WHITE + "")
-    print(Back.BLUE + Fore.WHITE + "Код Ошибки:")
-    print(Back.BLUE + Fore.WHITE + "Читайте ниже")
-    print(Back.BLUE + Fore.WHITE + "")
-    print(Back.BLUE + Fore.WHITE + "Проверьте правильность на сайте: ")
+    print(Back.BLUE + Fore.WHITE + "На вашем ПК Возникла Ошибка! / There was an error on your PC!")
     print(Back.BLUE + Fore.WHITE + "https://sites.google.com/view/bear-os-official/")
     for i in range(3):
         print(Back.BLUE + Fore.WHITE + "")
@@ -195,19 +189,14 @@ def MakeBan():
     print(Back.RED + Fore.WHITE + "")
     print(Back.RED + Fore.WHITE + ":(")
     print(Back.RED + Fore.WHITE + "")
-    print(Back.RED + Fore.WHITE + "Вы были забанены!")
+    print(Back.RED + Fore.WHITE + "Вы были забанены! / You have been banned!")
     print(Back.RED + Fore.WHITE + "")
-    print(Back.RED + Fore.WHITE + "Код Ошибки:")
-    print(Back.RED + Fore.WHITE + "You are been banned")
-    print(Back.RED + Fore.WHITE + "")
-    print(Back.RED + Fore.WHITE + "Проверьте правильность на сайте: ")
-    print(Back.RED + Fore.WHITE + "https://sites.google.com/view/bear-os-official/документация/ошибки/you-are-been-banned")
     for i in range(3):
         print(Back.RED + Fore.WHITE + "")
 
 
 
-data3["licensekey"] = licensekeygen()
+
 
 
 
@@ -246,7 +235,7 @@ TextRelease = """
 
 
 #--------PROPERTIES--------#
-forgorbearos = "N" #forget BEAR-OS?
+forgorbearos = "Y" #forget BEAR-OS?
 checkpass = "Y" #Check password?
 defaultName = "Admin" #default name
 defaultPassword = "" #default password
@@ -255,7 +244,7 @@ loginAtts = 5 #login attempts (-1 for turn off)
 canLoadData = "Y"
 checkaccaunt = "Y" #check accaunt
 activatebearos = "N" #Activate Bear-OS
-BearOSVersion = "1.9.2" # Version Of Bear-OS
+BearOSVersion = "1.9.3" # Version Of Bear-OS
 systemName = "Bear-OS" # Bear-OS System Name
 to_mail = "" #default mail IMPORTANT: DONT CHANGE THIS!
 defaultMail = "" #default mail
@@ -351,7 +340,7 @@ def createCaptcha():
     return captchagen
 
 
-def loading():
+def old_loading():
     sleep(randint(1,3))
     print("\n"*28)
     print(">..... [0%]")
@@ -372,6 +361,26 @@ def loading():
     print("=====> [100%]")
     sleep(randint(1,3))
     print("\n"*28)
+
+
+
+
+
+def loading():
+    sleep(randint(1, 3))
+    print("\n" * 28)
+    
+    width = 40
+    for percent in range(0, 101, 2):
+        print("\n" * 28)
+        filled = int(width * percent / 100)
+        bar = '=' * filled + '>' + '.' * (width - filled - 1)
+        print(f"[{bar}] {percent}%")
+        sleep(uniform(0.05, 0.15))
+    
+    sleep(randint(1, 3))
+    print("\n" * 28)
+
 
 def setcurrencyrate(currency):
     if currency == "$": 
@@ -1135,7 +1144,7 @@ if selectedLang == "RU":
             #     pass
 
 
-            SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail)
+            
 
             predupr = "Письмо было отправлено на вашу почту. Если его нет проверте                          вкладку 'Спам'! Лицензионный Ключ?" 
             print(name + ", Вы поставили пароль: " + str(passset))
@@ -1167,6 +1176,8 @@ if selectedLang == "RU":
                             pt.alert("Неправильный Лицензионный Ключ!", name)
             else:
                 activatebearos = "N"
+
+            SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail, activatebearos=activatebearos)
                         
 
 
@@ -1188,7 +1199,7 @@ if selectedLang == "RU":
                     stdo = input(Fore.GREEN + "Чтобы начать установку пропишите команду: " + Fore.YELLOW + "/start download: ")
         if canLoadData == "Y":
             loadedData = GetData()
-            name, Computer_name, passset, phone_number, to_mail = loadedData
+            name, Computer_name, passset, phone_number, to_mail, activatebearos = loadedData
 
         if checkaccaunt == "Y":
             print("---------------------------- \n Войдите в аккаунт!\n----------------------------")
@@ -1431,19 +1442,20 @@ if selectedLang == "RU":
 
             elif pr == "terminal":
                 print("           Терминал " + systemName)
-                execommand = input("Команда: ")
+                execommand = input(name + "@" + Computer_name + " ~ % ")
                 if execommand == "$" + systemName + " system set Activate: N":
                     if activatebearos == "Y":
                         print("Успешно!")
                         activatebearos = "N"
+                        SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail, activatebearos=activatebearos)
                     else:
                         print("Ошибка! Значение Activate: N неможет быть поставленно так как значение Activate стоит на: " + activatebearos)
                 elif execommand == "sudo su":
                     print("Введите пароль для root")
-                    rootpass = input("Пароль? ")
+                    rootpass = input("Пароль: ")
                     if rootpass == "root-" + passset:
                         print("Успешно!")
-                        rootexecommand = input(Back.BLACK + Fore.YELLOW + "Команда: ")
+                        rootexecommand = input(Back.BLACK + Fore.YELLOW + "root" + "@" + Computer_name + " ~ % ")
                         if rootexecommand == "rm -rf":
                             deletesystemQ = input(Back.RED + Fore.YELLOW + "ЭТО ОПАСНАЯ КОМАНДА! Продолжить? Y / N: ")
                             if deletesystemQ == "Y" or "y":
@@ -1730,7 +1742,7 @@ if selectedLang == "RU":
                     if newpass == newpassconfirm:
                         if newpass != "":
                             passset = newpass
-                            SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail)
+                            SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail, activatebearos=activatebearos)
                             
                             
 
@@ -1887,7 +1899,6 @@ else:
             #     sys.exit()
             # else:
             #     pass
-            SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail)
 
             predupr = "The letter was sent to your email. If it is not there, check the 'Spam' tab! License Key?" 
             print(name + ", You have set a password: " + passset)
@@ -1919,6 +1930,8 @@ else:
                             pt.alert("Incorrect license key!", name)
             else:
                 activatebearos = "N"
+
+            SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail, activatebearos=activatebearos)
                         
 
 
@@ -1940,7 +1953,7 @@ else:
                     stdo = input(Fore.GREEN + "To start the installation, enter the command: " + Fore.YELLOW + "/start download: ")
         if canLoadData == "Y":
             loadedData = GetData()
-            name, Computer_name, passset, phone_number, to_mail = loadedData
+            name, Computer_name, passset, phone_number, to_mail, activatebearos = loadedData
 
         if checkaccaunt == "Y":
             print("---------------------------- \n Login to your account!\n----------------------------")
@@ -2184,19 +2197,20 @@ else:
 
             elif pr == "terminal":
                 print("           Terminal " + systemName)
-                execommand = input("CMD: ")
+                execommand = input(name + "@" + Computer_name + " ~ % ")
                 if execommand == "$" + systemName + " system set Activate: N":
                     if activatebearos == "Y":
                         print("Success!")
                         activatebearos = "N"
+                        SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail, activatebearos=activatebearos)
                     else:
                         print("Err! The value Activate: N cannot be set because the value Activate is set to:" + activatebearos)
                 elif execommand == "sudo su":
                     print("Root Password")
-                    rootpass = input("Password? ")
+                    rootpass = input("Password: ")
                     if rootpass == "root-" + passset:
                         print("Success!")
-                        rootexecommand = input(Back.BLACK + Fore.YELLOW + "CMD: ")
+                        rootexecommand = input(Back.BLACK + Fore.YELLOW + "root" + "@" + Computer_name + " ~ % ")
                         if rootexecommand == "rm -rf":
                             deletesystemQ = input(Back.RED + Fore.YELLOW + "Are you sure you want to delete " + systemName + "? Y / N: ")
                             if deletesystemQ == "Y" or "y":
@@ -2483,7 +2497,7 @@ else:
                     if newpass == newpassconfirm:
                         if newpass != "":
                             passset = newpass
-                            SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail)
+                            SaveData(name=name, Computer_name=Computer_name, passset=passset, phone_number=phone_number, to_mail=to_mail, activatebearos=activatebearos)
                             
 
                             print("Success! New Password: " + passset)

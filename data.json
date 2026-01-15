@@ -1,7 +1,8 @@
 {
-    "name": "User",
-    "Computer_name": "Mac Mini",
-    "passset": "111111",
+    "name": "Admin",
+    "Computer_name": "(Unknown)",
+    "passset": "(Unknown)",
     "phone_number": "",
-    "to_mail": ""
+    "to_mail": "if3uy@virgilian.com",
+    "activatebearos": "Y"
 }
